@@ -6,11 +6,10 @@ const app = express();
 // Enable CORS
 app.use(cors({ origin: '*' }));
 
-// Middleware to parse JSON requests
+// Middleware to parse JSON
 app.use(express.json());
 
-// API Endpoints
-// Root route for testing
+// Root route (for testing)
 app.get('/', (req, res) => {
     res.send('Backend is running!');
 });
@@ -24,7 +23,7 @@ app.get('/api/portfolio', (req, res) => {
     ]);
 });
 
-// Trade route (mock logic)
+// Trade route (mock implementation)
 app.post('/api/trade', (req, res) => {
     const { strategy, token, amount } = req.body;
 
@@ -38,5 +37,4 @@ app.post('/api/trade', (req, res) => {
     });
 });
 
-// Export the app for Vercel
 module.exports = app;
