@@ -2,13 +2,20 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Enable CORS for frontend integration
+// Enable CORS
 app.use(cors({ origin: '*' }));
+
+// Middleware to parse JSON requests
 app.use(express.json());
 
-// Mock portfolio data (replace with real wallet data later)
+// API Endpoints
+// Root route for testing
+app.get('/', (req, res) => {
+    res.send('Backend is running!');
+});
+
+// Portfolio route
 app.get('/api/portfolio', (req, res) => {
     res.json([
         { token: 'SOL', amount: 25 },
@@ -17,32 +24,19 @@ app.get('/api/portfolio', (req, res) => {
     ]);
 });
 
-// Trading endpoint (mock implementation)
+// Trade route (mock logic)
 app.post('/api/trade', (req, res) => {
     const { strategy, token, amount } = req.body;
+
     if (!strategy || !token || !amount) {
         return res.status(400).json({ error: 'Missing trade parameters' });
     }
 
-    // Execute trading logic here (mock response)
     res.json({
         status: 'success',
         message: `Executed ${strategy} strategy for ${amount} ${token}`
     });
 });
 
-// Placeholder for Solana wallet integration (to be implemented)
-app.get('/api/wallet', (req, res) => {
-    res.json({
-        address: 'Your Phantom wallet address',
-        balances: [
-            { token: 'SOL', amount: 25 },
-            { token: 'USDC', amount: 1000 }
-        ]
-    });
-});
-
-// Start server
-app.listen(PORT, () => {
-    console.log(`Backend running on port ${PORT}`);
-});
+// Export the app for Vercel
+module.exports = app;
