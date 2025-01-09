@@ -1,0 +1,48 @@
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Enable CORS for frontend integration
+app.use(cors({ origin: '*' }));
+app.use(express.json());
+
+// Mock portfolio data (replace with real wallet data later)
+app.get('/api/portfolio', (req, res) => {
+    res.json([
+        { token: 'SOL', amount: 25 },
+        { token: 'USDC', amount: 1000 },
+        { token: 'ETH', amount: 1.5 }
+    ]);
+});
+
+// Trading endpoint (mock implementation)
+app.post('/api/trade', (req, res) => {
+    const { strategy, token, amount } = req.body;
+    if (!strategy || !token || !amount) {
+        return res.status(400).json({ error: 'Missing trade parameters' });
+    }
+
+    // Execute trading logic here (mock response)
+    res.json({
+        status: 'success',
+        message: `Executed ${strategy} strategy for ${amount} ${token}`
+    });
+});
+
+// Placeholder for Solana wallet integration (to be implemented)
+app.get('/api/wallet', (req, res) => {
+    res.json({
+        address: 'Your Phantom wallet address',
+        balances: [
+            { token: 'SOL', amount: 25 },
+            { token: 'USDC', amount: 1000 }
+        ]
+    });
+});
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Backend running on port ${PORT}`);
+});
